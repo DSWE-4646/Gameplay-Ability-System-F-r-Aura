@@ -1,7 +1,7 @@
 ﻿// SiberianSledCat
 
 
-#include "AuraEnemy.h"
+#include "Character/AuraEnemy.h"
 
 
 // Sets default values
