@@ -52,3 +52,51 @@ void AAuraPlayerController::AuraMove(const FInputActionValue& AuraInputActionVal
 		AuraPawn->AddMovementInput(RightVector, InputVecorAxisXY.X);
 	}
 }
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	CursorTrace();
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = CurrentActor;
+	CurrentActor = Cast<IHighlightActorInterface>(CursorHit.GetActor());
+	
+	if (LastActor == nullptr)
+	{
+		if (CurrentActor == nullptr)
+		{
+			//UE_LOG(LogTemp, Log, TEXT("No Valid Actor Pointed by Cursor"));
+		}
+		else
+		{
+			CurrentActor->HighlightActor();
+		}
+	}
+	else
+	{
+		if (CurrentActor == nullptr)
+		{
+			LastActor->UnHighlightActor();
+		}
+		else
+		{
+			if (LastActor != CurrentActor)
+			{
+				LastActor->UnHighlightActor();
+				CurrentActor->HighlightActor();
+			}
+			else
+			{
+				
+			}
+		}
+	}
+		
+}

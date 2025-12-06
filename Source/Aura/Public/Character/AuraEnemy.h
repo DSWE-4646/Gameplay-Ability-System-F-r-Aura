@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Character/AuraBaseCharacter.h"
+#include "Interface/HighlightActorInterface.h"
 #include "AuraEnemy.generated.h"
 
 UCLASS()
-class AURA_API AAuraEnemy : public AAuraBaseCharacter
+class AURA_API AAuraEnemy : public AAuraBaseCharacter, public IHighlightActorInterface
 {
 	GENERATED_BODY()
 
@@ -25,4 +26,15 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
+	
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsHighlighted = false;
+	
+private:
+	
+	
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Interface/HighlightActorInterface.h"
 #include "AuraPlayerController.generated.h"
 
 
@@ -32,4 +33,10 @@ private:
 	TObjectPtr<UInputMappingContext> AuraMappingContext;
 	
 	void AuraMove(const FInputActionValue& AuraInputActionValue);
+
+	virtual void PlayerTick(float DeltaTime) override;
+
+	void CursorTrace();
+	IHighlightActorInterface* LastActor;
+	IHighlightActorInterface* CurrentActor;
 };
