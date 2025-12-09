@@ -4,6 +4,8 @@
 #include "Character/AuraEnemy.h"
 
 #include "Aura/Aura.h"
+#include "GameplayAbilities/AuraAbilitySystemComponent.h"
+#include "GameplayAbilities/AuraAttributeSet.h"
 
 
 // Sets default values
@@ -13,6 +15,11 @@ AAuraEnemy::AAuraEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+	AbilitiesSystemInCharac = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInEnemy");
+	AbilitiesSystemInCharac->SetIsReplicated(true);
+
+	AttributeSetInCharac = CreateDefaultSubobject<UAuraAttributeSet>("ASCInEnemy");
 }
 
 // Called when the game starts or when spawned

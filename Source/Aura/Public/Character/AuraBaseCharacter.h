@@ -5,9 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AuraBaseCharacter.generated.h"
+#include "AbilitySystemInterface.h"
+
+class UAttributeSet;
+class UAbilitySystemComponent;
+
 
 UCLASS(Abstract, meta = (DisableNativeTick))
-class AURA_API AAuraBaseCharacter : public ACharacter
+class AURA_API AAuraBaseCharacter : public ACharacter, public IAbilitySystemInterface //Rider居然没识别头文件？
 {
 	GENERATED_BODY()
 
@@ -21,6 +26,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitiesSystemInCharac;
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSetInCharac;
 
 	
 private:
