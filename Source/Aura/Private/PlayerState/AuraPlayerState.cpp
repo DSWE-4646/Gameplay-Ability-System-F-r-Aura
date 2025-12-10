@@ -10,8 +10,18 @@ AAuraPlayerState::AAuraPlayerState()
 {
 	SetNetUpdateFrequency(100.f);
 
-	AbilitiesSystemInPlayerState = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInPlayerState");
-	AbilitiesSystemInPlayerState->SetIsReplicated(true);
+	AbilitySystemInPlayerState = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInPlayerState");
+	AbilitySystemInPlayerState->SetIsReplicated(true);
 
-	AttributeSetInPlayerState = CreateDefaultSubobject<UAuraAttributeSet>("ASCInPlayerState");
+	AttributeSetInPlayerState = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSetInPlayerState");
+}
+
+UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
+{
+	return AbilitySystemInPlayerState;
+}
+
+UAttributeSet* AAuraPlayerState::GetAttributeSet() const
+{
+	return AttributeSetInPlayerState;
 }

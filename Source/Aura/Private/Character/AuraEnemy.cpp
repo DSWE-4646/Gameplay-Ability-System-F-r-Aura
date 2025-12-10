@@ -16,10 +16,10 @@ AAuraEnemy::AAuraEnemy()
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
-	AbilitiesSystemInCharac = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInEnemy");
-	AbilitiesSystemInCharac->SetIsReplicated(true);
+	AbilitySystemInCharac = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInEnemy");
+	AbilitySystemInCharac->SetIsReplicated(true);
 
-	AttributeSetInCharac = CreateDefaultSubobject<UAuraAttributeSet>("ASCInEnemy");
+	AttributeSetInCharac = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSetInEnemy");
 }
 
 // Called when the game starts or when spawned
