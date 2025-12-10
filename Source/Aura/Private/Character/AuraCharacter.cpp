@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
 #include "GameplayAbilities/AuraAttributeSet.h"
+#include "PlayerState/AuraPlayerState.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -33,4 +34,27 @@ AAuraCharacter::AAuraCharacter()
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 	
+}
+
+void AAuraCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	InitAbilityActorInfoInAuraCharac();
+}
+
+void AAuraCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	InitAbilityActorInfoInAuraCharac();
+}
+
+void AAuraCharacter::InitAbilityActorInfoInAuraCharac()
+{
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	checkf(AuraPlayerState, TEXT("Get AAuraPlayerState failed in PossessBy"));
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	AbilitySystemInCharac = AuraPlayerState->GetAbilitySystemComponent();
+	AttributeSetInCharac = AuraPlayerState->GetAttributeSet();
 }

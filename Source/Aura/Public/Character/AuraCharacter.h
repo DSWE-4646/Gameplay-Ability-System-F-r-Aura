@@ -17,10 +17,15 @@ class AURA_API AAuraCharacter : public AAuraBaseCharacter
 	GENERATED_BODY()
 public:
 	AAuraCharacter();
+
+	virtual void PossessedBy(AController* NewController) override; //F12 make sure it's a public func
+	virtual void OnRep_PlayerState() override; //Also Public in Pawn Class
 private:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* AuraSpringArm;
 
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* AuraDefaultCamera;
+
+	void InitAbilityActorInfoInAuraCharac();
 };

@@ -12,6 +12,7 @@ AAuraPlayerState::AAuraPlayerState()
 
 	AbilitySystemInPlayerState = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInPlayerState");
 	AbilitySystemInPlayerState->SetIsReplicated(true);
+	AbilitySystemInPlayerState->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSetInPlayerState = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSetInPlayerState");
 }
@@ -25,3 +26,5 @@ UAttributeSet* AAuraPlayerState::GetAttributeSet() const
 {
 	return AttributeSetInPlayerState;
 }
+
+
