@@ -17,7 +17,7 @@ class AURA_API UAuraWidgetController : public UObject
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
 	TObjectPtr<UAbilitySystemComponent> ASCInWidController;
 

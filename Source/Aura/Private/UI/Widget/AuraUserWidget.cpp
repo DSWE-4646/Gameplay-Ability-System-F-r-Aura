@@ -5,6 +5,6 @@
 
 void UAuraUserWidget::SetWidgetController(UObject* WigController)
 {
-	WidgetController  = WigController;
-	InitializeWiggetController();
+	WidgetController = WigController;
+	BoundWidgetController();
 }
