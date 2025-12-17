@@ -5,16 +5,33 @@
 
 #include "Blueprint/UserWidget.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "UI/Controller/OverlayWidgetController.h"
 
-void AAuraHUD::BeginPlay()
+
+UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FAuraWidgetControllerParams& FAWCtrlParams)
 {
-	Super::BeginPlay();
+	if (OverlayWidCtlInHUD == nullptr)
+	{
+		OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>(this, OverlayWidCtlInHUDSubclass);
+		//OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>();
+		OverlayWidCtlInHUD ->SetWidgetControllerParams(FAWCtrlParams);
+		return OverlayWidCtlInHUD;
+	}
+	return OverlayWidCtlInHUD;
+}
 
-	if (!OverlayWidgetClass || !GetWorld())
-		return;
+void AAuraHUD::InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam)
+{
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please finish it in BP child class!"));
 	
+	
+	if (!OverlayWidgetClass || !GetWorld()) return;
 	DisplayWidget = CreateWidget<UAuraUserWidget>(GetWorld(),  OverlayWidgetClass);
-	
-	if (DisplayWidget)
+
+	const FAuraWidgetControllerParams WidgetControllerParams;
+	UOverlayWidgetController* OverlayWidgetController= GetOverlayWidgetController(WidgetControllerParams);
+
+	checkf(OverlayWidCtlInHUD, TEXT("Overlay Widget Class Controller uninitialized, please finish it in BP child class!"))
+	OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
 	DisplayWidget->AddToViewport();
 }
