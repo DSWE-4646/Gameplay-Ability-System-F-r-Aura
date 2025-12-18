@@ -37,6 +37,6 @@ private:
 	virtual void PlayerTick(float DeltaTime) override;
 
 	void CursorTrace();
-	IHighlightActorInterface* LastActor;
-	IHighlightActorInterface* CurrentActor;
+	TWeakInterfacePtr<IHighlightActorInterface> LastActor;
+	TWeakInterfacePtr<IHighlightActorInterface> CurrentActor;
 };

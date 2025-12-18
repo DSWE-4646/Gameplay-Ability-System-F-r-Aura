@@ -28,10 +28,13 @@ void AAuraHUD::InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlaye
 	if (!OverlayWidgetClass || !GetWorld()) return;
 	DisplayWidget = CreateWidget<UAuraUserWidget>(GetWorld(),  OverlayWidgetClass);
 
-	const FAuraWidgetControllerParams WidgetControllerParams;
+	const FAuraWidgetControllerParams WidgetControllerParams(ASCParam, PCParam, PSParam, ASParam);
 	UOverlayWidgetController* OverlayWidgetController= GetOverlayWidgetController(WidgetControllerParams);
 
 	checkf(OverlayWidCtlInHUD, TEXT("Overlay Widget Class Controller uninitialized, please finish it in BP child class!"))
 	OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+	DisplayWidget->SetWidgetController(OverlayWidCtlInHUD);
+	OverlayWidgetController->BroadcastInitializeValues();
+	
 	DisplayWidget->AddToViewport();
 }
