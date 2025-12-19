@@ -10,3 +10,7 @@ void UAuraWidgetController::SetWidgetControllerParams(const FAuraWidgetControlle
 	PSInWidController = Params.PSInWidCtlFS;
 	ASInWidController = Params.ASInWidCtlFS;
 }
+
+void UAuraWidgetController::BroadcastInitializeValues()
+{
+}

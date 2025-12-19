@@ -15,6 +15,8 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FAuraWidget
 		OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>(this, OverlayWidCtlInHUDSubclass);
 		//OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>();
 		OverlayWidCtlInHUD ->SetWidgetControllerParams(FAWCtrlParams);
+		OverlayWidCtlInHUD ->BindCallbacksToDependencies();
+		
 		return OverlayWidCtlInHUD;
 	}
 	return OverlayWidCtlInHUD;

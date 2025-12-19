@@ -37,6 +37,7 @@ void AAuraEffectActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		//Only For Studiert
 		UAuraAttributeSet* UnconstAuraAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
 		UnconstAuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
+		UnconstAuraAttributeSet->SetMana(AuraAttributeSet->GetMana() + 25.f);
 		Destroy();
 	}
 }
