@@ -3,48 +3,28 @@
 
 #include "Actor/AuraEffectActor.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
-#include "AbilitySystemInterface.h"
-#include "MovieSceneSequenceID.h"
-#include "Components/SphereComponent.h"
-#include "GameplayAbilities/AuraAttributeSet.h"
 
 // Sets default values
 AAuraEffectActor::AAuraEffectActor()
 {
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	SetRootComponent(Mesh);
-	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-	Sphere->SetupAttachment(RootComponent);
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Mesh"));
+	SetRootComponent(SceneRoot);
 }
 
-// Called when the game starts or when spawned
-void AAuraEffectActor::BeginPlay()
+void AAuraEffectActor::ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
-	Super::BeginPlay();
-	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraEffectActor::OnOverlapBegin);
-	Sphere->OnComponentEndOverlap.AddDynamic(this, &AAuraEffectActor::OnOverlapEnd);
+	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	//UAbilitySystemComponent* TargetASC = Cast<UAbilitySystemComponent>(Target); //通过接口方法，有警告
+	if (!TargetASC)   return;
+
+	checkf(GameplayEffectClass, TEXT("GameplayEffectClass doesn't Set!"));
+	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(this);
+	FGameplayEffectSpecHandle EffectSpecHandle =  TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.0f, EffectContextHandle);
+	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 }
 
-void AAuraEffectActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (IAbilitySystemInterface* AbilitySystemInterface = Cast<IAbilitySystemInterface>(OtherActor))
-	{
-		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(AbilitySystemInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
-		//AuraAttributeSet->SetHealth();
 
-		//Only For Studiert
-		UAuraAttributeSet* UnconstAuraAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
-		UnconstAuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
-		UnconstAuraAttributeSet->SetMana(AuraAttributeSet->GetMana() + 25.f);
-		Destroy();
-	}
-}
-
-inline void AAuraEffectActor::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	
-}
 
