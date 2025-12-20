@@ -13,9 +13,9 @@ AAuraEffectActor::AAuraEffectActor()
 	SetRootComponent(SceneRoot);
 }
 
-void AAuraEffectActor::ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
+void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
-	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	//UAbilitySystemComponent* TargetASC = Cast<UAbilitySystemComponent>(Target); //通过接口方法，有警告
 	if (!TargetASC)   return;
 

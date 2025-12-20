@@ -24,11 +24,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* SceneRoot;
 
-	UPROPERTY(EditDefaultsOnly, Category= "Applied Effects")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Applied Effects")
 	TSubclassOf<UGameplayEffect> InstanceGameplayEffectClass;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyEffectToTarget(AActor*  Target, TSubclassOf<UGameplayEffect> GameplayEffectClass );
+	void ApplyEffectToTarget(AActor*  TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass );
 private:
 	
 };
