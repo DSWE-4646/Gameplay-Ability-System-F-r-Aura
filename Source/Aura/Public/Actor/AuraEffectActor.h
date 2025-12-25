@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Applied Effects")
 	TSubclassOf<UGameplayEffect> InstanceGameplayEffectClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Applied Effects")
+	TSubclassOf<UGameplayEffect>DurationGameplayEffectClass;
+
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor*  TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass );
 private:
