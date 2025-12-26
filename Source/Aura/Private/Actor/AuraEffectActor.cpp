@@ -9,7 +9,7 @@
 // Sets default values
 AAuraEffectActor::AAuraEffectActor()
 {
-	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Mesh"));
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	SetRootComponent(SceneRoot);
 }
 
