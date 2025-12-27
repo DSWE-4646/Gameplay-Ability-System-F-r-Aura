@@ -24,11 +24,14 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	EffectContextHandle.AddSourceObject(this);
 	FGameplayEffectSpecHandle EffectSpecHandle =  TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.0f, EffectContextHandle);
 
+	/** New in 移除无限GE与无限GE堆叠 */
 	if (FGameplayEffectSpec* spec = EffectSpecHandle.Data.Get())
 	{
+		/* Get GE from SpecHandle */
 		const UGameplayEffect* GameplayEffect = spec->Def.Get();
 		if (GameplayEffect)
 		{
+			/* Judge Is infinite from GE */
 			const bool bIsInfinite = (GameplayEffect->DurationPolicy == EGameplayEffectDurationType::Infinite);
 			if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 			{
@@ -61,7 +64,6 @@ void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
-	if (!TargetActor) return;
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
 		ApplyEffectToTarget(TargetActor, InstanceGameplayEffectClass);
@@ -70,6 +72,8 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	{
 		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
 	}
+
+	/* Remove Infinite GE */
 	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (!IsValid(TargetASC)) return;
 	TArray<FActiveGameplayEffectHandle> HandlesToRemove;
@@ -83,6 +87,7 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 			HandlesToRemove.Add(EffectHandle);
 		}
 	}
+	/* Remove from TArray */
 	for (const FActiveGameplayEffectHandle& EffectHandle : HandlesToRemove)
 	{
 		ActiveEffectHandles.Remove(EffectHandle);

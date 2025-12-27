@@ -12,6 +12,7 @@
 class UGameplayEffect;
 class USphereComponent;
 
+/* when applyGE */
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy : uint8
 {
@@ -20,6 +21,7 @@ enum class EEffectApplicationPolicy : uint8
 	DoNotApply
 };
 
+/** a Tag fur identify SpecHandle*/
 UENUM(BlueprintType)
 enum class EEffectRemovalPolicy : uint8
 {
@@ -52,6 +54,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor*  TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass );
 
+	/* Select in BP to Decide when GE Valid */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Effects")
 	EEffectApplicationPolicy InstantEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 
@@ -64,6 +67,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
 
+	/* New Apply Way, This will have a judge before directly apply */
 	UPROPERTY(BlueprintReadWrite)
 	bool bDestroyOnEffectRemoval = false;
 
@@ -73,6 +77,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
+	/** Use fur to identify the different player */
 	UPROPERTY()
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 private:
