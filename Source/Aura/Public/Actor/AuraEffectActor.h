@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "GameplayEffect.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
@@ -71,6 +72,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
+
+	UPROPERTY()
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 private:
 	
 };
