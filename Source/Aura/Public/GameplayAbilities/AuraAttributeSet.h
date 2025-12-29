@@ -18,6 +18,50 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+USTRUCT()
+struct FEffectProperties
+{
+	GENERATED_BODY()
+
+	
+	FEffectProperties() //FGameplayEffectContextHandle has default constructor so do not need to init manual
+		: SourceASC(nullptr)
+		,SourceAvatarActor(nullptr)
+		, SourceController(nullptr)
+		,SourceCharacter(nullptr)
+		,TargetASC(nullptr)
+		,TargetAvatarActor(nullptr)
+		,TargetController(nullptr)
+		,TargetCharacter(nullptr)
+	{}
+
+	FGameplayEffectContextHandle FGameplayEffectContextHandle;
+	
+	UPROPERTY()
+	UAbilitySystemComponent* SourceASC;
+
+	UPROPERTY()
+	AActor* SourceAvatarActor;
+
+	UPROPERTY()
+	AController* SourceController;
+
+	UPROPERTY()
+	ACharacter* SourceCharacter;
+
+	UPROPERTY()
+	UAbilitySystemComponent* TargetASC;
+
+	UPROPERTY()
+	AActor* TargetAvatarActor;
+
+	UPROPERTY()
+	AController* TargetController;
+
+	UPROPERTY()
+	ACharacter* TargetCharacter;
+};
+
 UCLASS()
 class AURA_API UAuraAttributeSet : public UAttributeSet
 {
@@ -42,6 +86,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category = "Vital Attributes")
 	FGameplayAttributeData MaxMana;
 
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+
 	
 private:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
@@ -60,5 +106,7 @@ private:
 
 	/* Use fur ensuring values are bewteen MAX und Min */
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
-	
+
+	/*  This Func is ising for collecting information of source und target */
+	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 };
