@@ -36,29 +36,29 @@ void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) 
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, MaxMana, OldMaxMana);
 }
-
+/*
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 
 	if (Attribute == GetHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetHealth());
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
 	}
 	if (Attribute == GetMaxHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
+		NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxHealth());
 	}
 	if (Attribute == GetManaAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMana());
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 	}
 	if (Attribute == GetMaxManaAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
+		NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxMana());
 	}
 }
-
+*/
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
 	Props.FGameplayEffectContextHandle = Data.EffectSpec.GetEffectContext();
@@ -78,7 +78,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	if (Props.SourceController)
 	Props.SourceCharacter = Cast<ACharacter>(Props.SourceAvatarActor);
 
-	Props.TargetASC = Data.Target;
+	//Props.TargetASC = Data.Target;
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Props.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
@@ -88,12 +88,13 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	}
 }
 
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 
 	FEffectProperties Props;
-	SetEffectProperties(Data, Props);
+	//SetEffectProperties(Data, Props);
 	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
@@ -101,6 +102,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 	}
 
 }
+
 
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {

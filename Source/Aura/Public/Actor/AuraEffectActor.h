@@ -80,6 +80,9 @@ protected:
 	/** Use fur to identify the different player */
 	UPROPERTY()
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Effects")
+	float Actorlevel = 1.0f;
 private:
 	
 };

@@ -22,7 +22,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	checkf(GameplayEffectClass, TEXT("GameplayEffectClass doesn't Set!"));
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
-	FGameplayEffectSpecHandle EffectSpecHandle =  TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.0f, EffectContextHandle);
+	FGameplayEffectSpecHandle EffectSpecHandle =  TargetASC->MakeOutgoingSpec(GameplayEffectClass, Actorlevel, EffectContextHandle);
 
 	/** New in 移除无限GE与无限GE堆叠 */
 	if (FGameplayEffectSpec* spec = EffectSpecHandle.Data.Get())
