@@ -36,7 +36,7 @@ void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) 
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, MaxMana, OldMaxMana);
 }
-/*
+
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
@@ -58,14 +58,14 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 		NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxMana());
 	}
 }
-*/
+
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
 	Props.FGameplayEffectContextHandle = Data.EffectSpec.GetEffectContext();
 	/* This ASC may be nullptr but check will execute when using */
 	Props.SourceASC = Props.FGameplayEffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
 	/* TSharedPtr is a packger, IsVaid ist its mem-func so use by "." */
-	if (Props.SourceASC && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
+	if (Props.SourceASC && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Props.SourceAvatarActor = Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
 		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
@@ -75,8 +75,8 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		if (const APawn* SourcePawn = Cast<APawn>(Props.SourceAvatarActor))
 		Props.SourceController = SourcePawn -> GetController();
 	}
-	if (Props.SourceController)
-	Props.SourceCharacter = Cast<ACharacter>(Props.SourceAvatarActor);
+	if (IsValid(Props.SourceAvatarActor))
+		Props.SourceCharacter = Cast<ACharacter>(Props.SourceAvatarActor);
 
 	//Props.TargetASC = Data.Target;
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
@@ -85,6 +85,13 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		Props.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		Props.TargetCharacter = Cast<ACharacter>(Props.TargetAvatarActor);
 		Props.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Props.TargetAvatarActor);
+
+		// Safety check: ensure TargetASC is valid
+		if (!IsValid(Props.TargetASC))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("SetEffectProperties: Failed to get TargetASC from AvatarActor %s"),
+				*GetNameSafe(Props.TargetAvatarActor));
+		}
 	}
 }
 

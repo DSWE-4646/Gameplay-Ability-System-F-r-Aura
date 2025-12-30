@@ -9,8 +9,8 @@
 // Sets default values
 AAuraEffectActor::AAuraEffectActor()
 {
-	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-	SetRootComponent(SceneRoot);
+	//SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	//SetRootComponent(SceneRoot);
 }
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
@@ -33,13 +33,14 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 		{
 			/* Judge Is infinite from GE */
 			const bool bIsInfinite = (GameplayEffect->DurationPolicy == EGameplayEffectDurationType::Infinite);
-			if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
+
+			/* Apply the effect */
+			const FActiveGameplayEffectHandle ActiveGameplayEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*spec);
+
+			/* Only store Infinite effects for later removal */
+			if (bIsInfinite && ActiveGameplayEffectHandle.IsValid())
 			{
-				const FActiveGameplayEffectHandle ActiveGameplayEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*spec);
-				if (ActiveGameplayEffectHandle.IsValid())
-				{
-					ActiveEffectHandles.Add(ActiveGameplayEffectHandle, TargetASC);
-				}
+				ActiveEffectHandles.Add(ActiveGameplayEffectHandle, TargetASC);
 			}
 		}
 	}
@@ -94,6 +95,4 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	}
 	
 }
-
-
 

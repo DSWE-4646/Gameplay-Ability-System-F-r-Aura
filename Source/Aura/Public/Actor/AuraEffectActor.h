@@ -5,12 +5,10 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 #include "GameplayEffect.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
 
 class UGameplayEffect;
-class USphereComponent;
 
 /* when applyGE */
 UENUM(BlueprintType)
@@ -41,6 +39,7 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* SceneRoot;
+	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Applied Effects")
 	TSubclassOf<UGameplayEffect> InstanceGameplayEffectClass;

@@ -105,7 +105,7 @@ private:
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
 	/* Use fur ensuring values are bewteen MAX und Min */
-	//virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	/*  This Func is ising for collecting information of source und target */
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
