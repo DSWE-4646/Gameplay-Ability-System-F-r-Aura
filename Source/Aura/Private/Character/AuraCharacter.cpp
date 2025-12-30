@@ -42,17 +42,17 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	InitAbilityActorInfoInAuraCharac();
+	InitAbilityActorInfoInCharac();
 }
 
 void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
-	InitAbilityActorInfoInAuraCharac();
+	InitAbilityActorInfoInCharac();
 }
 
-void AAuraCharacter::InitAbilityActorInfoInAuraCharac()
+void AAuraCharacter::InitAbilityActorInfoInCharac()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	checkf(AuraPlayerState, TEXT("Get AAuraPlayerState failed in PossessBy"));
@@ -60,10 +60,9 @@ void AAuraCharacter::InitAbilityActorInfoInAuraCharac()
 	AbilitySystemInCharac = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSetInCharac = AuraPlayerState->GetAttributeSet();
 
-	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemInCharac))
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemInCharac))
 	{
-		AuraAbilitySystemComponent->AbilityActorInfoSet();
-		
+		AuraASC->AbilityActorInfoSet();
 	}
 	
 	if (AAuraPlayerController* AuraPlayerController  = Cast<AAuraPlayerController>(GetController()))

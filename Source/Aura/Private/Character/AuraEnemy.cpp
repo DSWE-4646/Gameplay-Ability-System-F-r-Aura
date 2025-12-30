@@ -26,7 +26,7 @@ AAuraEnemy::AAuraEnemy()
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	InitAbilityActorInfoInAuraCharac();
+	InitAbilityActorInfoInCharac();
 }
 
 // Called every frame
@@ -57,9 +57,11 @@ void AAuraEnemy::UnHighlightActor()
 	Weapon->SetRenderCustomDepth(false);
 }
 
-void AAuraEnemy::InitAbilityActorInfoInAuraCharac()
+/* 为了可读性、一致性、可维护性、可拓展性，又把逻辑从Beginplay
+ * 移到这里，在InitAbilityActorInfoInCharac中调用 */
+void AAuraEnemy::InitAbilityActorInfoInCharac()
 {
-	Super::InitAbilityActorInfoInAuraCharac();
+	Super::InitAbilityActorInfoInCharac();
 
 	checkf(AbilitySystemInCharac,TEXT("Enemy AbilitySystemInCharac Init Failed!"));
 	AbilitySystemInCharac->InitAbilityActorInfo(this, this);

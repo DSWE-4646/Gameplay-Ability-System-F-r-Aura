@@ -34,7 +34,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsHighlighted = false;
 
-	virtual void InitAbilityActorInfoInAuraCharac() override;
+	virtual void InitAbilityActorInfoInCharac() override;
 	
 private:
 	
