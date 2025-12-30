@@ -19,7 +19,6 @@ AAuraEnemy::AAuraEnemy()
 	AbilitySystemInCharac = CreateDefaultSubobject<UAuraAbilitySystemComponent>("ASCInEnemy");
 	AbilitySystemInCharac->SetIsReplicated(true);
 	AbilitySystemInCharac->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-
 	AttributeSetInCharac = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSetInEnemy");
 }
 
@@ -27,8 +26,7 @@ AAuraEnemy::AAuraEnemy()
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	checkf(AbilitySystemInCharac,TEXT("Enemy AbilitySystemInCharac Init Failed!"));
-	AbilitySystemInCharac->InitAbilityActorInfo(this, this);
+	InitAbilityActorInfoInAuraCharac();
 }
 
 // Called every frame
@@ -57,5 +55,18 @@ void AAuraEnemy::UnHighlightActor()
 	//bIsHighlighted = false;
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+}
+
+void AAuraEnemy::InitAbilityActorInfoInAuraCharac()
+{
+	Super::InitAbilityActorInfoInAuraCharac();
+
+	checkf(AbilitySystemInCharac,TEXT("Enemy AbilitySystemInCharac Init Failed!"));
+	AbilitySystemInCharac->InitAbilityActorInfo(this, this);
+	
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemInCharac))
+	{
+		AuraAbilitySystemComponent->AbilityActorInfoSet();
+	}
 }
 

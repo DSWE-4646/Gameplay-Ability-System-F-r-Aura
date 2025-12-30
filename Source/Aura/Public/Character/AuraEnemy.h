@@ -33,6 +33,8 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsHighlighted = false;
+
+	virtual void InitAbilityActorInfoInAuraCharac() override;
 	
 private:
 	

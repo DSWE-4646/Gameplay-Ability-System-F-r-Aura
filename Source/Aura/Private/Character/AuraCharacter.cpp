@@ -60,6 +60,12 @@ void AAuraCharacter::InitAbilityActorInfoInAuraCharac()
 	AbilitySystemInCharac = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSetInCharac = AuraPlayerState->GetAttributeSet();
 
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemInCharac))
+	{
+		AuraAbilitySystemComponent->AbilityActorInfoSet();
+		
+	}
+	
 	if (AAuraPlayerController* AuraPlayerController  = Cast<AAuraPlayerController>(GetController()))
 	{
 		AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD());

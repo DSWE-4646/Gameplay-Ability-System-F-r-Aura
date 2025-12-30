@@ -33,6 +33,10 @@ UAttributeSet* AAuraBaseCharacter::GetAttributeSet() const
 	return AttributeSetInCharac;
 }
 
+void AAuraBaseCharacter::InitAbilityActorInfoInAuraCharac()
+{
+}
+
 
 
 

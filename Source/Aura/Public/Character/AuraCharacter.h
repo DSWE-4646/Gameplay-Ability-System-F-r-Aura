@@ -27,5 +27,5 @@ private:
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* AuraDefaultCamera;
 
-	void InitAbilityActorInfoInAuraCharac();
+	virtual void InitAbilityActorInfoInAuraCharac() override;
 };

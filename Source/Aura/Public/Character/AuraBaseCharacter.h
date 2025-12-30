@@ -33,7 +33,8 @@ protected:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const;
-	
+
+	virtual void InitAbilityActorInfoInAuraCharac();
 private:
 	
 };
