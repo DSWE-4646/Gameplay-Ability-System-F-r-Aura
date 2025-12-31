@@ -21,6 +21,17 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		&UOverlayWidgetController::ManaChanged);
 	ASCInWidController -> GetGameplayAttributeValueChangeDelegate(AuraAS->GetMaxManaAttribute()).AddUObject(this,
 		&UOverlayWidgetController::MAXManaChanged);
+
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(ASCInWidController))
+	{
+		AuraASC->EffectAssetTags.AddLambda([](const FGameplayTagContainer& TagsContainer)
+		{
+			for (const FGameplayTag& tag : TagsContainer)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::MakeRandomColor(), *tag.ToString());
+			}
+		});
+	}
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
