@@ -26,9 +26,16 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	{
 		AuraASC->EffectAssetTags.AddLambda([this](const FGameplayTagContainer& TagsContainer)
 		{
+			const FGameplayTag MessageRootTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 			for (const FGameplayTag& tag : TagsContainer)
 			{
-				FUIWidgetRow* Row = GetDataTableRowbyTag<FUIWidgetRow>(MessageWidgetDataTable, tag);
+				if (tag.MatchesTag(MessageRootTag))
+				{
+					FUIWidgetRow* Row = GetDataTableRowbyTag<FUIWidgetRow>(MessageWidgetDataTable, tag);
+				
+				if (Row)
+					MessageWidgetRowSignature.Broadcast(*Row);
+				}
 			}
 		});
 	}

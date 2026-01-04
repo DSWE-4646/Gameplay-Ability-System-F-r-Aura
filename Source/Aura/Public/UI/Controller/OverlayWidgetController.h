@@ -37,6 +37,8 @@ public:
 	TObjectPtr<UTexture2D> icon = nullptr;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, const FUIWidgetRow&, Row);
+
 UCLASS(BlueprintType, Blueprintable)
 class AURA_API UOverlayWidgetController : public UAuraWidgetController
 {
@@ -65,14 +67,20 @@ protected:
 	TObjectPtr<UDataTable> MessageWidgetDataTable = nullptr;
 
 	template<typename T>
-	T* UOverlayWidgetController::GetDataTableRowbyTag(const UDataTable* DataTable, const FGameplayTag& Tag)
+	T* GetDataTableRowbyTag(const UDataTable* DataTable, const FGameplayTag& Tag)
 	{
 		T* Row = DataTable->FindRow<T>(Tag.GetTagName(), "");
 		return Row;
 	}
+
+	UPROPERTY(BlueprintAssignable, Category= "GAS|Attributes")
+	FMessageWidgetRowSignature MessageWidgetRowSignature;
+	
 public:
 	virtual void BroadcastInitializeValues() override;
 	virtual void BindCallbacksToDependencies() override;
+
+	
 	
 };
 
