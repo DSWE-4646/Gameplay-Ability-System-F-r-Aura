@@ -24,11 +24,11 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(ASCInWidController))
 	{
-		AuraASC->EffectAssetTags.AddLambda([](const FGameplayTagContainer& TagsContainer)
+		AuraASC->EffectAssetTags.AddLambda([this](const FGameplayTagContainer& TagsContainer)
 		{
 			for (const FGameplayTag& tag : TagsContainer)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::MakeRandomColor(), *tag.ToString());
+				FUIWidgetRow* Row = GetDataTableRowbyTag<FUIWidgetRow>(MessageWidgetDataTable, tag);
 			}
 		});
 	}
