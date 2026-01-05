@@ -31,6 +31,9 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			{
 				if (tag.MatchesTag(MessageRootTag))
 				{
+					if (!MessageWidgetDataTable) 
+					UE_LOG(LogTemp, Error, TEXT("MessageWidgetDataTable is not set in OverlayWidgetController"));
+						
 					FUIWidgetRow* Row = GetDataTableRowbyTag<FUIWidgetRow>(MessageWidgetDataTable, tag);
 				
 				if (Row)
