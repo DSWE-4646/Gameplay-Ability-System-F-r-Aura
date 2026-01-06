@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "OverlayWidgetController.generated.h"
 
+class UAuraUserWidget;
 struct FOnAttributeChangeData;
 class UUserWidget;
 /**
@@ -31,7 +32,7 @@ public:
 	FText MessageText = FText::GetEmpty();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI Data")
-	TSubclassOf<UUserWidget> WidgetClass = nullptr;
+	TSubclassOf<UAuraUserWidget> WidgetClass = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI Data")
 	TObjectPtr<UTexture2D> icon = nullptr;
