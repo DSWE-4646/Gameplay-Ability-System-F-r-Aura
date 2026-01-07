@@ -13,11 +13,7 @@ class UUserWidget;
 /**
  * 
  */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignatured, float, NewHewalth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMAXHealthChangedSignatured, float, NewMAXHewalth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMAXManaChangedSignature, float, NewMaxMana);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignatured, float, NewValue);
 
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
@@ -47,22 +43,16 @@ class AURA_API UOverlayWidgetController : public UAuraWidgetController
 
 protected:
 	UPROPERTY(BlueprintAssignable, Category= "GAS|Attributes")
-	FOnHealthChangedSignatured OnHealthChanged;
+	FOnAttributeChangedSignatured OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category= "GAS|Attributes")
-	FOnMAXHealthChangedSignatured OnMAXHealthChanged;
+	FOnAttributeChangedSignatured OnMAXHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category= "GAS|Attributes")
-	FOnManaChangedSignature OnManaChanged;
+	FOnAttributeChangedSignatured OnManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category= "GAS|Attributes")
-	FOnMAXManaChangedSignature OnMAXManaChanged;
-	
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
-	void MAXHealthChanged(const FOnAttributeChangeData& Data) const;
-
-	void ManaChanged(const FOnAttributeChangeData& Data) const;
-	void MAXManaChanged(const FOnAttributeChangeData& Data) const;
+	FOnAttributeChangedSignatured OnMAXManaChanged;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable = nullptr;
@@ -80,9 +70,6 @@ protected:
 public:
 	virtual void BroadcastInitializeValues() override;
 	virtual void BindCallbacksToDependencies() override;
-
-	
-	
 };
 
 
