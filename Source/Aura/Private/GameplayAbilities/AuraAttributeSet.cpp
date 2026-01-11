@@ -59,6 +59,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
+
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
 	Props.FGameplayEffectContextHandle = Data.EffectSpec.GetEffectContext();
@@ -76,11 +77,12 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		Props.SourceController = SourcePawn -> GetController();
 	}
 	if (IsValid(Props.SourceAvatarActor))
-		Props.SourceCharacter = Cast<ACharacter>(Props.SourceAvatarActor);
+		Props.SourceCharacter = Cast<ACharacter>(Props.SourceAvatarActor); 
 
-	//Props.TargetASC = Data.Target;
+	
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
+		//Props.TargetASC = Data.Target; Target就是一个ASC
 		Props.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
 		Props.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		Props.TargetCharacter = Cast<ACharacter>(Props.TargetAvatarActor);
@@ -100,8 +102,20 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	FEffectProperties Props;
-	//SetEffectProperties(Data, Props);
+	FEffectProperties Props; //PostGameplayEffectExecute内定义的用于
+	SetEffectProperties(Data, Props);
+
+	//应用GE后快照中的生命值和法力值可能超出最大值，更新快照
+	const FGameplayAttribute& AttributeToCheck = Data.EvaluatedData.Attribute;
+	if (AttributeToCheck == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(),0.f, GetMaxHealth()));
+	}
+	if (AttributeToCheck == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+	}
+
 	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
