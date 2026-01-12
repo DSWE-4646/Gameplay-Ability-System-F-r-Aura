@@ -68,31 +68,70 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	
 	UAuraAttributeSet();
 public:
+	/* 生成基础属性的属性访问器函数 */
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana)
+
+	/* 生成加点属性的属性访问器函数 */
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Intelligence)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor)
+
 protected:
+
+	/* 基础数据 */
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Health, Category = "Vital Attributes")
-	FGameplayAttributeData Health;
+	FGameplayAttributeData     Health;
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category = "Vital Attributes")
-	FGameplayAttributeData MaxHealth;
+	FGameplayAttributeData     MaxHealth;
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Mana, Category = "Vital Attributes")
-	FGameplayAttributeData Mana;
+	FGameplayAttributeData     Mana;
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category = "Vital Attributes")
-	FGameplayAttributeData MaxMana;
+	FGameplayAttributeData     MaxMana;
 
+	/*加点属性*/
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Strength, Category = "primary Attributes")
+	FGameplayAttributeData     Strength;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Intelligence, Category = "primary Attributes")
+	FGameplayAttributeData     Intelligence;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Resilience, Category = "primary Attributes")
+	FGameplayAttributeData	   Resilience;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Vigor, Category = "primary Attributes")
+	FGameplayAttributeData     Vigor;
+
+	
 	/* 调用SetEffectProperties获取GE上下文与核心信息并存储，
 	 * 还被用于在应用GE后钳制AS值更新快照，确保持续/状态GE的计算值与AS值相一致 */
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
 	
 private:
+	/* 在网络宏注册AS的属性，使这些AS值在网络同步时被复制 */
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
+	/* 加点属性的OnRep函数，用于在属性值改变时更新AS值,内部函数通知GAS系统更新AS值、GE快照并触发OnAttributeChange */
+	UFUNCTION()
+	void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
+	
+	UFUNCTION()
+	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
+
+	UFUNCTION()
+	void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
+
+	UFUNCTION()
+	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+
+	/* 基础属性的OnRep函数，用于在属性值改变时更新AS值 */
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 
