@@ -18,13 +18,12 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+//用于存储GE来源与目标的ASC、AvatarActor、Controller、Character的struct
 USTRUCT()
 struct FEffectProperties
 {
 	GENERATED_BODY()
-
-	
-	FEffectProperties() //FGameplayEffectContextHandle has default constructor so do not need to init manual
+	FEffectProperties() //FGameplayEffectContextHandle有自己的默认构造函数无需此处手动初始化
 		: SourceASC(nullptr)
 		,SourceAvatarActor(nullptr)
 		, SourceController(nullptr)
@@ -35,31 +34,31 @@ struct FEffectProperties
 		,TargetCharacter(nullptr)
 	{}
 
-	FGameplayEffectContextHandle FGameplayEffectContextHandle;
+	FGameplayEffectContextHandle FGameplayEffectContextHandle; //从PostGameplayEffectExecute传入的的Data获取
 	
 	UPROPERTY()
-	UAbilitySystemComponent* SourceASC;
+	UAbilitySystemComponent* SourceASC; //从FGameplayEffectContextHandle获取
 
 	UPROPERTY()
-	AActor* SourceAvatarActor;
+	AActor* SourceAvatarActor; //从ASC的AbilityActorInfo->AvatarActor.get获取
 
 	UPROPERTY()
-	AController* SourceController;
+	AController* SourceController; //从AvatarActor Cast的APawn指针获取
 
 	UPROPERTY()
-	ACharacter* SourceCharacter;
+	ACharacter* SourceCharacter; //从Props.SourceAvatarActor Cast过来的
 
 	UPROPERTY()
-	UAbilitySystemComponent* TargetASC;
+	UAbilitySystemComponent* TargetASC; //FGameplayEffectModCallbackData&的target就是一个ASC，此处也用AS蓝图库获取ASC
 
 	UPROPERTY()
-	AActor* TargetAvatarActor;
+	AActor* TargetAvatarActor; //从ASC的AbilityActorInfo->AvatarActor.get获取
 
 	UPROPERTY()
-	AController* TargetController;
+	AController* TargetController; //从AvatarActor Cast的APawn指针获取
 
 	UPROPERTY()
-	ACharacter* TargetCharacter;
+	ACharacter* TargetCharacter; //从Props.TargetAvatarActor Cast过来的
 };
 
 UCLASS()
@@ -86,6 +85,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category = "Vital Attributes")
 	FGameplayAttributeData MaxMana;
 
+	/* 调用SetEffectProperties获取GE上下文与核心信息并存储，
+	 * 还被用于在应用GE后钳制AS值更新快照，确保持续/状态GE的计算值与AS值相一致 */
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
 	
@@ -104,9 +105,11 @@ private:
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
-	/* Use fur ensuring values are bewteen MAX und Min */
+	/* 钳制对于属性值的修改，确保设置的新值在有效范围内，注意此时GE已经创建快照，
+	 * 对于持续/状态GE，由于他们计算采用的的是快照，
+	 * 可能导致计算值与AS值相矛盾，需要在 PostGameplayEffectExecute中Setter AS*/
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
-	/*  This Func is ising for collecting information of source und target */
+	/* 用于在PostGameplayEffectExecute中获取一些属性并存储在传入的Props中 */
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 };
