@@ -17,14 +17,17 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 {
 	GENERATED_BODY()
 
-	AAuraPlayerState();
-
-	UPROPERTY()
+	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ability System")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemInPlayerState;
+	
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSetInPlayerState;
 
 public:
+	AAuraPlayerState();
+	
 	//~ Begin IAbilitySystemInterface Interface.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const;
