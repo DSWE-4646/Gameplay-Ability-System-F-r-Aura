@@ -70,4 +70,6 @@ void AAuraCharacter::InitAbilityActorInfoInCharac()
 		AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD());
 		AuraHUD->InitializeOverlayWidget(AbilitySystemInCharac, AuraPlayerController, AuraPlayerState, AttributeSetInCharac);
 	}
+
+	InitDefaultAttributes();
 }

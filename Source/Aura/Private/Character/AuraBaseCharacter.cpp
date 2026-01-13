@@ -3,7 +3,7 @@
 
 #include "Character/AuraBaseCharacter.h"
 
-#include "AttributeSet.h"
+#include "AbilitySystemComponent.h"
 
 // Sets default values
 AAuraBaseCharacter::AAuraBaseCharacter()
@@ -35,6 +35,36 @@ UAttributeSet* AAuraBaseCharacter::GetAttributeSet() const
 
 void AAuraBaseCharacter::InitAbilityActorInfoInCharac()
 {
+}
+
+void AAuraBaseCharacter::InitDefaultAttributes() const
+{
+	//checkf(IsValid(DefaultPrimaryAttributeGE), TEXT("DefaultPrimaryAttributeGE is not valid"));
+	if (!IsValid(DefaultPrimaryAttributeGE)) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DefaultPrimaryAttributeGE is not valid"));
+		return;
+	}
+
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	if (!IsValid(ASC)) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AbilitySystemComponent is not valid"));
+		return;
+	}
+	
+		FGameplayEffectContextHandle Context = ASC->MakeEffectContext();
+		FGameplayEffectSpecHandle Spec =ASC->MakeOutgoingSpec(DefaultPrimaryAttributeGE,
+		1.f,
+		Context);
+	
+	if (!Spec.IsValid())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to create GameplayEffectSpec"));
+		return;
+	}
+	ASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), ASC);
+	
 }
 
 

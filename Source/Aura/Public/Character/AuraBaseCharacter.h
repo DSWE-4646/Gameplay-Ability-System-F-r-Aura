@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
+class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
@@ -35,6 +36,11 @@ protected:
 	virtual UAttributeSet* GetAttributeSet() const;
 
 	virtual void InitAbilityActorInfoInCharac();
-private:
-	
+
+	/* 用于初始化角色的GE类 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributeGE;
+
+	/* 调用GE初始化角色的AS */
+	void InitDefaultAttributes() const;
 };
