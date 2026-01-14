@@ -86,16 +86,10 @@ protected:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Health, Category = "Vital Attributes")
 	FGameplayAttributeData     Health;
 	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category = "Vital Attributes")
-	FGameplayAttributeData     MaxHealth;
-	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Mana, Category = "Vital Attributes")
 	FGameplayAttributeData     Mana;
-	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category = "Vital Attributes")
-	FGameplayAttributeData     MaxMana;
 
-	/*加点属性*/
+	/*加点属性，影响附属属性并间接影响游戏战斗数值*/
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Strength, Category = "primary Attributes")
 	FGameplayAttributeData     Strength;
 
@@ -108,6 +102,37 @@ protected:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Vigor, Category = "primary Attributes")
 	FGameplayAttributeData     Vigor;
 
+	/* 附属属性，受到加点属性的影响并影响游戏战斗数值 */
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Armor, Category = "secondary Attributes")
+	FGameplayAttributeData     Armor;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArmorPenetration, Category = "secondary Attributes")
+	FGameplayAttributeData     ArmorPenetration;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BlockChance, Category = "secondary Attributes")
+	FGameplayAttributeData     BlockChance;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitChance, Category = "secondary Attributes")
+	FGameplayAttributeData     CriticalHitChance;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitDamage, Category = "secondary Attributes")
+	FGameplayAttributeData     CriticalHitDamage;
+
+	UPROPERTY(BlueprintReadOnly, Replicatedusing = onRep_CriticalHitResistance, Category = "secondary Attributes")
+	FGameplayAttributeData     CriticalHitResistance;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegeneration, Category = "secondary Attributes")
+	FGameplayAttributeData     HealthRegeneration;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegeneration, Category = "secondary Attributes")
+	FGameplayAttributeData     ManaRegeneration;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category = "Vital Attributes")
+	FGameplayAttributeData     MaxMana;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category = "Vital Attributes")
+	FGameplayAttributeData     MaxHealth;
+	
 	
 	/* 调用SetEffectProperties获取GE上下文与核心信息并存储，
 	 * 还被用于在应用GE后钳制AS值更新快照，确保持续/状态GE的计算值与AS值相一致 */
@@ -136,13 +161,38 @@ private:
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
+
+	/* 附属属性的OnRep函数，用于在属性值改变时更新AS值 */
+	UFUNCTION()
+	void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
 
 	UFUNCTION()
-	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
+	void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
+
+	UFUNCTION()
+	void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
+
+	UFUNCTION()
+	void OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const;
+
+	UFUNCTION()
+	void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
+
+	UFUNCTION()
+	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
+
+	UFUNCTION()
+	void OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const;
+
+	UFUNCTION()
+	void OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const;
 
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	
+	UFUNCTION()
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 
 	/* 钳制对于属性值的修改，确保设置的新值在有效范围内，注意此时GE已经创建快照，
 	 * 对于持续/状态GE，由于他们计算采用的的是快照，
