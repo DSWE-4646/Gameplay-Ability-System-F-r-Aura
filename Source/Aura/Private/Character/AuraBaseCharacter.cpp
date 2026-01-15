@@ -39,10 +39,16 @@ void AAuraBaseCharacter::InitAbilityActorInfoInCharac()
 
 void AAuraBaseCharacter::InitDefaultAttributes() const
 {
+	ApplyGEToSelfForInit(DefaultPrimaryAttributeGE, 1.f);
+	ApplyGEToSelfForInit(SecondaryAttributeGE, 1.f);
+}
+
+void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GEClass, float Level) const
+{
 	//checkf(IsValid(DefaultPrimaryAttributeGE), TEXT("DefaultPrimaryAttributeGE is not valid"));
-	if (!IsValid(DefaultPrimaryAttributeGE)) 
+	if (!IsValid(GEClass)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("DefaultPrimaryAttributeGE is not valid"));
+		UE_LOG(LogTemp, Warning, TEXT("GEClass is not valid"));
 		return;
 	}
 
@@ -53,10 +59,10 @@ void AAuraBaseCharacter::InitDefaultAttributes() const
 		return;
 	}
 	
-		FGameplayEffectContextHandle Context = ASC->MakeEffectContext();
-		FGameplayEffectSpecHandle Spec =ASC->MakeOutgoingSpec(DefaultPrimaryAttributeGE,
-		1.f,
-		Context);
+	FGameplayEffectContextHandle Context = ASC->MakeEffectContext();
+	FGameplayEffectSpecHandle Spec =ASC->MakeOutgoingSpec(GEClass,
+	Level,
+	Context);
 	
 	if (!Spec.IsValid())
 	{
@@ -64,7 +70,6 @@ void AAuraBaseCharacter::InitDefaultAttributes() const
 		return;
 	}
 	ASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), ASC);
-	
 }
 
 

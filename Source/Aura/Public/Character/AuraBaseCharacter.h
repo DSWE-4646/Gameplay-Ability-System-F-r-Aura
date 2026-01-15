@@ -41,6 +41,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributeGE;
 
-	/* 调用GE初始化角色的AS */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
+	TSubclassOf<UGameplayEffect> SecondaryAttributeGE;
+
+	/* 调用GE初始化角色的AS by 调用ApplyGEToSelfForInit */
 	void InitDefaultAttributes() const;
+
+	/* 调用传入的GE初始化角色的主要AS，并启用无限的附属GE以在其他AS更新时修改计算值 */
+	void ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GEClass, float Level = 1.f) const;
 };
