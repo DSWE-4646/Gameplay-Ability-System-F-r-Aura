@@ -5,6 +5,7 @@
 
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
 #include "GameplayAbilities/AuraAttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
 {
@@ -26,6 +27,23 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 UAttributeSet* AAuraPlayerState::GetAttributeSet() const
 {
 	return AttributeSetInPlayerState;
+}
+
+int32 AAuraPlayerState::GetPlayerLevel() const
+{
+	return PlayerLevel;
+}
+
+void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAuraPlayerState, PlayerLevel);
+}
+
+void AAuraPlayerState::OnRep_PlayerLevel(int32 OldLevel)
+{
+	
 }
 
 

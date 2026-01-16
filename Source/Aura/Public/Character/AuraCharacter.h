@@ -20,6 +20,9 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override; //F12 make sure it's a public func
 	virtual void OnRep_PlayerState() override; //Also Public in Pawn Class
+
+	/* 对Combat接口的获取level重写 */
+	virtual int32 GetLevelAttribute() const override;
 private:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* AuraSpringArm;

@@ -16,6 +16,8 @@ public:
 	// Sets default values for this character's properties
 	AAuraEnemy();
 
+	virtual int32 GetLevelAttribute() const override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,7 +38,8 @@ protected:
 
 	virtual void InitAbilityActorInfoInCharac() override;
 	
-private:
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	int32 LevelAttribute = 1;
 	
 	
 };

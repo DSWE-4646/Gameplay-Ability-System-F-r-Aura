@@ -22,6 +22,11 @@ AAuraEnemy::AAuraEnemy()
 	AttributeSetInCharac = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSetInEnemy");
 }
 
+int32 AAuraEnemy::GetLevelAttribute() const
+{
+	return LevelAttribute;
+}
+
 // Called when the game starts or when spawned
 void AAuraEnemy::BeginPlay()
 {

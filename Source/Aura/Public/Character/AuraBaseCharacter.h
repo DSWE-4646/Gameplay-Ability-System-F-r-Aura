@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interface/CombatInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
 class UGameplayEffect;
@@ -13,7 +14,7 @@ class UAbilitySystemComponent;
 
 
 UCLASS(Abstract, meta = (DisableNativeTick))
-class AURA_API AAuraBaseCharacter : public ACharacter, public IAbilitySystemInterface 
+class AURA_API AAuraBaseCharacter : public ACharacter, public IAbilitySystemInterface , public ICombatInterface
 {
 	GENERATED_BODY()
 
