@@ -41,6 +41,7 @@ void AAuraBaseCharacter::InitDefaultAttributes() const
 {
 	ApplyGEToSelfForInit(DefaultPrimaryAttributeGE, 1.f);
 	ApplyGEToSelfForInit(SecondaryAttributeGE, 1.f);
+	ApplyGEToSelfForInit(DefaultVitalAttributeGE, 1.f);
 }
 
 void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GEClass, float Level) const
@@ -69,6 +70,7 @@ void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GECla
 		UE_LOG(LogTemp, Warning, TEXT("Failed to create GameplayEffectSpec"));
 		return;
 	}
+	UE_LOG(LogTemp, Warning, TEXT("The %s GE will be applied to self"), *GEClass->GetName());
 	ASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), ASC);
 }
 

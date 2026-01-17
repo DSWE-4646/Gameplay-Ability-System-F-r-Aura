@@ -1,0 +1,54 @@
+[33m1ce9c9a[m[33m ([m[1;36mHEAD[m[33m)[m 创建基于其他属性实时修改的附属属性GE并重写GE初始化AS的函数
+[33m9c9cae1[m 配置完附属属性
+[33m09a114c[m 使用前后处理GE基础值并应用 And 未配置完成的附属属性
+[33m17b8afa[m 基于Base Attribute的GE
+[33m4cdb917[m GE初始化AS
+[33m598ff39[m Merge remote-tracking branch 'origin/main'
+[33m2c51a34[m 增加力量、活力等加点属性并通过数据表格进行初始化（非推荐方案）
+[33m0929975[m 增加力量、活力等加点属性并通过数据表格进行初始化（非推荐方案）
+[33m53934ea[m Merge remote-tracking branch 'origin/main'
+[33m78321cc[m 在PostgameplayEffectExcute中再次钳制并Setter，了解GE的快照机制并更新部分中文注释
+[33m53e934c[m UI bug修复
+[33m133b0b8[m UI bug修复
+[33m64d1ca1[m 未完成
+[33m6b7a28f[m 未果，注意到ghost初始值为0
+[33m154b49c[m 未完成的进度条背景
+[33m270d140[m 将OverlayWidgetController中的AddUObject替换为Lambda并修改EffectMessage持续时间
+[33m7ae14fa[m 对WBP_EffectMessage制作动画并延时销毁
+[33mec92942[m 配置蓝图、修改结构体行中类型改bug并在屏幕中间显示subwidget
+[33m062903b[m 空指针原因为未在BP_OverlayWidgetController中配置MessageWidgetDataTable
+[33m1295e9a[m 更新git配置，上传BP与Maps文件夹
+[33mced4ce9[m 添加广播根据GE打印相应的Tag名称（存在空指针问题）
+[33mb68c14a[m 对应数据表与GE的Tag，在Overlay中编写根据Tag名称从DataBase获取Row函数并在lambda中调用
+[33m4c5758d[m 获取所有资源Tag并广播调用lambda
+[33m1f1a81b[m 在Enemy中将GAS逻辑重新放到相关函数中，不再放在BeginPlay()
+[33m9b5544d[m 在ASC与Charac、Enemy类中为GE修改该ASC时添加相应的回调函数
+[33md7809c3[m 添加GameplayTags
+[33m51c0491[m bug finden：ApplyToTarget只在无限GE时调用 AS中Set函数存储charac时检查的是Ctrl
+[33mc0973f3[m 药水不起作用
+[33m6dc41ba[m GE后处理获取与封装信息
+[33m0c7b6fa[m 使用PreAttributeChange设置属性修改时的上下限（不建议使用）
+[33m41dddf2[m 增加注释
+[33m4c4a5d9[m 移除无限GE与无限GE堆叠
+[33maf1607b[m 未完成的GE枚举配置
+[33m2e66c3b[m 持续GE与周期GE
+[33m2e2df49[m 添加持续GE
+[33m998b308[m 配置BP_GE以使用GE修改HP与Mana Potion
+[33maa09165[m 使用GAS的EffectActor。真麻烦呀:(
+[33mcf7ad91[m 广播初始化值与监听AS中Health与Mana的变更后更新UI
+[33m5468edd[m 广播初始化进度条值
+[33mf524f53[m 设置WidgetController用于传递包含4个var的结构体的函数，在AuraHUD中创建初始化控件初始化Controller函数并在charac调用实现UI覆盖
+[33m75d4a00[m 添加HUD与生命、法术Widget
+[33m993a5e2[m UUserWidget与WidgetController基类
+[33m30e9f43[m 使用一个Actor强制转换实现对于AS的修改
+[33ma5aa509[m 属性访问器函数
+[33m62776bd[m InitialAbilityActorInfo
+[33m5b01f8a[m ä¿添加ASC接口
+[33m2944edf[m ASC与AS挂载（PlayerState中还未完成接口函数重写）
+[33m5580086[m 添加PlayerState Class
+[33m13eeff8[m 设置后期处理轮廓
+[33ma7630ab[m 设置GameMode以及角色视角
+[33mb1d63be[m Add PlayController Class
+[33m134f121[m Create Aura and Enemy Initial BP
+[33m972710c[m Create Character Class
+[33m48e6842[m 删除旧LFS仓库新建仓库

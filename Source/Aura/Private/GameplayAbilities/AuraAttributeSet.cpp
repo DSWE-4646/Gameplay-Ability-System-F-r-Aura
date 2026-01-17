@@ -11,8 +11,7 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	InitHealth(50.f);
-	InitMana(10.f);
+
 }
 
 /* 基础属性的OnRep函数，用于在属性值改变时更新AS值 */
@@ -104,19 +103,19 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 
 	if (Attribute == GetHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
+		//NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
 	}
 	if (Attribute == GetMaxHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxHealth());
+		//NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxHealth());
 	}
 	if (Attribute == GetManaAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
+		//NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 	}
 	if (Attribute == GetMaxManaAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxMana());
+		//NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxMana());
 	}
 }
 
@@ -170,11 +169,11 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 	const FGameplayAttribute& AttributeToCheck = Data.EvaluatedData.Attribute;
 	if (AttributeToCheck == GetHealthAttribute())
 	{
-		SetHealth(FMath::Clamp(GetHealth(),0.f, GetMaxHealth()));
+		//SetHealth(FMath::Clamp(GetHealth(),0.f, GetMaxHealth()));
 	}
 	if (AttributeToCheck == GetManaAttribute())
 	{
-		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+		//SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
 
 	
