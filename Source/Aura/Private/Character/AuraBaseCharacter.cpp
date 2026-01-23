@@ -41,7 +41,9 @@ void AAuraBaseCharacter::InitDefaultAttributes() const
 {
 	ApplyGEToSelfForInit(DefaultPrimaryAttributeGE, 1.f);
 	ApplyGEToSelfForInit(SecondaryAttributeGE, 1.f);
+	// 延迟1帧执行Vital GE，等待Secondary GE完成派生
 	ApplyGEToSelfForInit(DefaultVitalAttributeGE, 1.f);
+	//ApplyGEToSelfForInit(DefaultVitalAttributeGE, 1.f);
 }
 
 void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GEClass, float Level) const

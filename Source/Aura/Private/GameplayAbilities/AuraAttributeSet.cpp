@@ -103,20 +103,14 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 
 	if (Attribute == GetHealthAttribute())
 	{
-		//NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
 	}
-	if (Attribute == GetMaxHealthAttribute())
-	{
-		//NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxHealth());
-	}
+	
 	if (Attribute == GetManaAttribute())
 	{
-		//NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 	}
-	if (Attribute == GetMaxManaAttribute())
-	{
-		//NewValue = FMath::Clamp(NewValue, 0.f, 2 * GetMaxMana());
-	}
+	
 }
 
 
@@ -164,16 +158,16 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 
 	FEffectProperties Props; //PostGameplayEffectExecute内定义的用于
 	SetEffectProperties(Data, Props);
-
+ 
 	//应用GE后快照中的生命值和法力值可能超出最大值，更新快照
 	const FGameplayAttribute& AttributeToCheck = Data.EvaluatedData.Attribute;
 	if (AttributeToCheck == GetHealthAttribute())
 	{
-		//SetHealth(FMath::Clamp(GetHealth(),0.f, GetMaxHealth()));
+		SetHealth(FMath::Clamp(GetHealth(),0.f, GetMaxHealth()));
 	}
 	if (AttributeToCheck == GetManaAttribute())
 	{
-		//SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
 
 	
