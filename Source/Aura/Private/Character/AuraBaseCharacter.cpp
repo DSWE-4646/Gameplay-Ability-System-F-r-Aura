@@ -63,6 +63,7 @@ void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GECla
 	}
 	
 	FGameplayEffectContextHandle Context = ASC->MakeEffectContext();
+	Context.AddSourceObject(this); // 添加自身作为Context的SourceObject,否则MMC中将无法获取到Self的level
 	FGameplayEffectSpecHandle Spec =ASC->MakeOutgoingSpec(GEClass,
 	Level,
 	Context);
