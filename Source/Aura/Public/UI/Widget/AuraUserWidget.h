@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "UObject/ObjectRename.h"
 #include "AuraUserWidget.generated.h"
 
 class UAuraWidgetController;
