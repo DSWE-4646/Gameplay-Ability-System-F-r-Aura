@@ -15,6 +15,7 @@ class UUserWidget;
  */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignatured, float, NewValue);
 
+/* 作为数据表行模板，在编辑器继承蓝图创建数据表格用于 */
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
 {
