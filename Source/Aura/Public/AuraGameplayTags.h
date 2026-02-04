@@ -13,10 +13,12 @@ struct FAuraGameplayTags
 public:
 	FAuraGameplayTags();
 	static const FAuraGameplayTags& Get();
+	static void InitializeGameplayTags();
+	static FAuraGameplayTags Attribute_Secondary_Armor;
 
 protected:
 
 private:
 	static FAuraGameplayTags GameplayTags;
-	static void InitializeGameplayTags();
+	
 };
