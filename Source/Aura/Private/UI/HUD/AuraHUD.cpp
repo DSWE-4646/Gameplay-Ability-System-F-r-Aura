@@ -5,6 +5,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "UI/Controller/AttributeMenuController.h"
 #include "UI/Controller/OverlayWidgetController.h"
 
 
@@ -20,6 +21,22 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FAuraWidget
 		return OverlayWidCtlInHUD;
 	}
 	return OverlayWidCtlInHUD;
+}
+
+UAttributeMenuController* AAuraHUD::GetAttributeMenuController()
+{
+ if (!AttributeMenuController)
+    {
+        // 复用WidgetControllerParams创建实例
+        const FAuraWidgetControllerParams Params;
+       AttributeMenuController = NewObject<UAttributeMenuController>(this);
+        AttributeMenuController->SetWidgetControllerParams(Params);
+        // 调用重写函数，完成初始化
+        AttributeMenuController->BindCallbacksToDependencies();
+        AttributeMenuController->BroadcastInitializeValues();
+    }
+    return AttributeMenuController;
+
 }
 
 void AAuraHUD::InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam)

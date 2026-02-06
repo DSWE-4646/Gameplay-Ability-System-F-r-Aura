@@ -38,6 +38,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			OnMAXManaChanged.Broadcast(Data.NewValue);
 		});
 
+	/* 在游戏效果应用时显示相应的 UI 消息 */
 	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(ASCInWidController))
 	{
 		AuraASC->EffectAssetTags.AddLambda([this](const FGameplayTagContainer& TagsContainer)

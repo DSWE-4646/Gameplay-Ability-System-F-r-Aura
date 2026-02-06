@@ -18,6 +18,7 @@ struct FAuraWidgetControllerParams
 {
 	GENERATED_BODY()
 
+	/*提供默认构造函数与初始化列表2种方法*/
 	FAuraWidgetControllerParams() {}
 	FAuraWidgetControllerParams(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam)
 		: ASCInWidCtlFS(ASCParam), PCInWidCtlFS(PCParam), PSInWidCtlFS(PSParam), ASInWidCtlFS(ASParam) {}
@@ -40,9 +41,11 @@ class AURA_API UAuraWidgetController : public UObject
 {
 	GENERATED_BODY()
 public:
+	/*使用传入的参数初始化WidgetController*/
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FAuraWidgetControllerParams& Params);
 
+	/* 绑定Lambda到委托，在属性变化时广播，区别于初始化*/
 	virtual void BindCallbacksToDependencies() {}
 	
 protected:
@@ -58,5 +61,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
 	TObjectPtr<UAttributeSet> ASInWidController;
 
+	/* 在Health Mana MAX Health MAX Mana 发生变化时广播以初始化值*/
 	virtual void BroadcastInitializeValues();
 };
