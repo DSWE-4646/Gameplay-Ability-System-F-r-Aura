@@ -9,6 +9,7 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
 
+	/*测试是否注册了Native GameplayTag
 	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 	const FGameplayTag ArmorTag = GameplayTags.Attributes_Secondary_Armor;
 	if (GEngine)
@@ -18,6 +19,7 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 			FColor::MakeRandomColor(),
 			FString::Printf(TEXT("ArmorTag: %s"), *ArmorTag.ToString()));
 	}
+	*/
 }
 
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC,
