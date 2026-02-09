@@ -27,10 +27,8 @@ UAttributeMenuController* AAuraHUD::GetAttributeMenuController(const FAuraWidget
 	// 如果没有初始化过，则初始化
 	 if (AttributeMenuController == nullptr)
 	    {
-	        // 复用WidgetControllerParams创建实例
-	        const FAuraWidgetControllerParams Params;
 	       AttributeMenuController = NewObject<UAttributeMenuController>(this, AttributeMenuControllerClass);
-	        AttributeMenuController->SetWidgetControllerParams(Params);
+	        AttributeMenuController->SetWidgetControllerParams(FAWCtrlParams);
 	        // 调用重写函数，完成初始化
 	        AttributeMenuController->BindCallbacksToDependencies();
 	        AttributeMenuController->BroadcastInitializeValues();

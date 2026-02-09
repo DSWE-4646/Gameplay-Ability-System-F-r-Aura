@@ -63,5 +63,6 @@ protected:
 	TObjectPtr<UAttributeSet> ASInWidController;
 
 	/* 在Health Mana MAX Health MAX Mana 发生变化时广播以初始化值*/
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitializeValues();
 };

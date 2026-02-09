@@ -40,7 +40,7 @@ class AURA_API UAttributeInfo : public UDataAsset
 public:
 	/* 在属性信息数组中查找指定Tag对应的信息，如果找到则返回对应的信息，否则返回空信息*/
 	UFUNCTION(BlueprintCallable)
-	FAuraAttributeInfo GetAttributeInfo(const FGameplayTag& AttributeTag, bool& bFound) const;
+	FAuraAttributeInfo FindAttributeInfo(const FGameplayTag& AttributeTag, bool bFound = false) const;
 	
 protected:
 	/* 属性信息数组 */

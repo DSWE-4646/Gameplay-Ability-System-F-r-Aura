@@ -3,7 +3,7 @@
 
 #include "GameplayAbilities/Data/AttributeInfo.h"
 
-FAuraAttributeInfo UAttributeInfo::GetAttributeInfo(const FGameplayTag& AttributeTag, bool& bLogNotFound) const
+FAuraAttributeInfo UAttributeInfo::FindAttributeInfo(const FGameplayTag& AttributeTag, bool bLogNotFound ) const
 {
 	for (const FAuraAttributeInfo& info : AttributeInformation)
 	{
