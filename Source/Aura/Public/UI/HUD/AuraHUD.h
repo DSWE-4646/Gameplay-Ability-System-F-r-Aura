@@ -6,7 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "AuraHUD.generated.h"
 
-class UAttributeMenuController_Deprecated;
+class UAttributeMenuController;
 class UAbilitySystemComponent;
 class UAttributeSet;
 struct FAuraWidgetControllerParams;
@@ -21,26 +21,36 @@ class AURA_API AAuraHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	/* 将被蓝图函数库调用 */
 	UOverlayWidgetController* GetOverlayWidgetController(const FAuraWidgetControllerParams& FAWCtrlParams);
-
-	UFUNCTION(BlueprintCallable, Category = "Widget Controller")
-	UAttributeMenuController_Deprecated* GetAttributeMenuController();
+	UAttributeMenuController* GetAttributeMenuController(const FAuraWidgetControllerParams& FAWCtrlParams);
 
 	void InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam);
 protected:
+	//将被显示的控件类
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UAuraUserWidget> OverlayWidgetClass;
 
-	UPROPERTY()
-	TObjectPtr<UAuraUserWidget> DisplayWidget;
-
+	//用于指定将创建的AttributeMenuController类
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UOverlayWidgetController> OverlayWidCtlInHUD  = nullptr;
+	TSubclassOf<UAttributeMenuController> AttributeMenuControllerClass;
 
+	//用于指定将创建的OverlayWidgetController类
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UOverlayWidgetController> OverlayWidCtlInHUDSubclass;
 
 private:
-	UAttributeMenuController_Deprecated* AttributeMenuController = nullptr;
+	/* 此处的类由程序初始化，不应被赋值 */
 	
+	//指向创建出的AttributeMenuController
+	UPROPERTY()
+	TObjectPtr<UAttributeMenuController> AttributeMenuController = nullptr;
+
+	//指向创建出的将被显示控件
+	UPROPERTY()
+	TObjectPtr<UAuraUserWidget> DisplayWidget;
+
+	//指向创建出的OverlayWidgetController
+	UPROPERTY()
+	TObjectPtr<UOverlayWidgetController> OverlayWidCtlInHUD  = nullptr;
 };

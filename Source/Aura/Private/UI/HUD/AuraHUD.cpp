@@ -5,38 +5,37 @@
 
 #include "Blueprint/UserWidget.h"
 #include "UI/Widget/AuraUserWidget.h"
-#include "UI/Controller/AttributeMenuController_Deprecated.h"
+#include "UI/Controller/AttributeMenuController.h"
 #include "UI/Controller/OverlayWidgetController.h"
 
 
 UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FAuraWidgetControllerParams& FAWCtrlParams)
 {
+	// 如果没有初始化过，则初始化
 	if (OverlayWidCtlInHUD == nullptr)
 	{
 		OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>(this, OverlayWidCtlInHUDSubclass);
 		//OverlayWidCtlInHUD = NewObject<UOverlayWidgetController>();
 		OverlayWidCtlInHUD ->SetWidgetControllerParams(FAWCtrlParams);
 		OverlayWidCtlInHUD ->BindCallbacksToDependencies();
-		
-		return OverlayWidCtlInHUD;
 	}
 	return OverlayWidCtlInHUD;
 }
 
-UAttributeMenuController_Deprecated* AAuraHUD::GetAttributeMenuController()
+UAttributeMenuController* AAuraHUD::GetAttributeMenuController(const FAuraWidgetControllerParams& FAWCtrlParams)
 {
- if (!AttributeMenuController)
-    {
-        // 复用WidgetControllerParams创建实例
-        const FAuraWidgetControllerParams Params;
-       AttributeMenuController = NewObject<UAttributeMenuController_Deprecated>(this);
-        AttributeMenuController->SetWidgetControllerParams(Params);
-        // 调用重写函数，完成初始化
-        AttributeMenuController->BindCallbacksToDependencies();
-        AttributeMenuController->BroadcastInitializeValues();
-    }
-    return AttributeMenuController;
-
+	// 如果没有初始化过，则初始化
+	 if (AttributeMenuController == nullptr)
+	    {
+	        // 复用WidgetControllerParams创建实例
+	        const FAuraWidgetControllerParams Params;
+	       AttributeMenuController = NewObject<UAttributeMenuController>(this, AttributeMenuControllerClass);
+	        AttributeMenuController->SetWidgetControllerParams(Params);
+	        // 调用重写函数，完成初始化
+	        AttributeMenuController->BindCallbacksToDependencies();
+	        AttributeMenuController->BroadcastInitializeValues();
+	    }
+	    return AttributeMenuController;
 }
 
 void AAuraHUD::InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam)
