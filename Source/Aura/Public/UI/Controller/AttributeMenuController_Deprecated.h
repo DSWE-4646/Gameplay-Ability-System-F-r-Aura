@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "AuraWidgetController.h"
-#include "AttributeMenuController.generated.h"
+#include "AttributeMenuController_Deprecated.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class AURA_API UAttributeMenuController : public UAuraWidgetController
+class AURA_API UAttributeMenuController_Deprecated : public UAuraWidgetController
 {
 	GENERATED_BODY()
 

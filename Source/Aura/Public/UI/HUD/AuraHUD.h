@@ -6,7 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "AuraHUD.generated.h"
 
-class UAttributeMenuController;
+class UAttributeMenuController_Deprecated;
 class UAbilitySystemComponent;
 class UAttributeSet;
 struct FAuraWidgetControllerParams;
@@ -24,7 +24,7 @@ public:
 	UOverlayWidgetController* GetOverlayWidgetController(const FAuraWidgetControllerParams& FAWCtrlParams);
 
 	UFUNCTION(BlueprintCallable, Category = "Widget Controller")
-	UAttributeMenuController* GetAttributeMenuController();
+	UAttributeMenuController_Deprecated* GetAttributeMenuController();
 
 	void InitializeOverlayWidget(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam);
 protected:
@@ -41,6 +41,6 @@ protected:
 	TSubclassOf<UOverlayWidgetController> OverlayWidCtlInHUDSubclass;
 
 private:
-	UAttributeMenuController* AttributeMenuController = nullptr;
+	UAttributeMenuController_Deprecated* AttributeMenuController = nullptr;
 	
 };

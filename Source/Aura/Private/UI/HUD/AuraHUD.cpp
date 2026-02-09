@@ -5,7 +5,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "UI/Widget/AuraUserWidget.h"
-#include "UI/Controller/AttributeMenuController.h"
+#include "UI/Controller/AttributeMenuController_Deprecated.h"
 #include "UI/Controller/OverlayWidgetController.h"
 
 
@@ -23,13 +23,13 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FAuraWidget
 	return OverlayWidCtlInHUD;
 }
 
-UAttributeMenuController* AAuraHUD::GetAttributeMenuController()
+UAttributeMenuController_Deprecated* AAuraHUD::GetAttributeMenuController()
 {
  if (!AttributeMenuController)
     {
         // 复用WidgetControllerParams创建实例
         const FAuraWidgetControllerParams Params;
-       AttributeMenuController = NewObject<UAttributeMenuController>(this);
+       AttributeMenuController = NewObject<UAttributeMenuController_Deprecated>(this);
         AttributeMenuController->SetWidgetControllerParams(Params);
         // 调用重写函数，完成初始化
         AttributeMenuController->BindCallbacksToDependencies();
