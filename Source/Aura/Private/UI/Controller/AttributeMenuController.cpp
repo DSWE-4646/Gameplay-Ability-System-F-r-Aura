@@ -17,6 +17,7 @@ void UAttributeMenuController::BroadcastInitializeValues()
 		const FGameplayTag StrengthTag = FAuraGameplayTags::Get().Attributes_Primary_Strength;
 		FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfo(StrengthTag);
 		Info.AttributeValue = AS->GetStrength();
+		OnMenuAttributeChanged.Broadcast(Info);
 	}
 }
 
