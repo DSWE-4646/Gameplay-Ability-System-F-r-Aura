@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
+#include "GameplayTagContainer.h"
 #include "AuraAttributeSet.generated.h"
 
 
@@ -79,6 +80,16 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Intelligence)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor)
+
+	/*
+	//重命名函数指针
+	typedef FGameplayAttribute (*FAttributeFuncPtr)();
+	TMap<FGameplayTag, FAttributeFuncPtr> TagsToAttributes;
+	*/
+
+	template<typename T>
+	using TStaticFuncPtr = TBaseStaticDelegateInstance<T,FDefaultDelegateUserPolicy>::FFuncPtr;
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 
 protected:
 

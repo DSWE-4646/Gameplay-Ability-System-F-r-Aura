@@ -4,6 +4,7 @@
 #include "GameplayAbilities/AuraAttributeSet.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
@@ -11,7 +12,20 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
+	//获取Native C++管理器，以便于从中获得Tag
+	const FAuraGameplayTags& AuraGameplayTags = FAuraGameplayTags::Get();
 
+	/* //新建委托并绑定函数，将委托添加到TMap中
+	FAttributeSignature StrengthDelegate;
+	StrengthDelegate.BindStatic(&UAuraAttributeSet::GetStrengthAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Strength, StrengthDelegate);
+	*/
+
+	/* 此处添加要初始化的属性，此处绑定的Tag与相应的获取属性函数指针用于指定将被初始化的属性*/
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Strength, &UAuraAttributeSet::GetStrengthAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Intelligence, &UAuraAttributeSet::GetIntelligenceAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Resilience, &UAuraAttributeSet::GetResilienceAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Vigor, &UAuraAttributeSet::GetVigorAttribute);
 }
 
 /* 基础属性的OnRep函数，用于在属性值改变时更新AS值 */

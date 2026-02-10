@@ -14,10 +14,15 @@ void UAttributeMenuController::BroadcastInitializeValues()
 	UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(ASInWidController);
 	if (AttributeInfo)
 	{
-		const FGameplayTag StrengthTag = FAuraGameplayTags::Get().Attributes_Primary_Strength;
-		FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfo(StrengthTag);
-		Info.AttributeValue = AS->GetStrength();
-		OnMenuAttributeChanged.Broadcast(Info);
+		/* 遍历AS中的TMap，根据Key获取Tag相应的Info，根据Value获取每个属性后取值，并广播给UI */
+		for (const auto& Pair : AS->TagsToAttributes)
+		{
+			FGameplayTag GameplayTag = Pair.Key;
+			FAuraAttributeInfo RowAttributeInfo = AttributeInfo->FindAttributeInfo(GameplayTag);
+			//Pair.Value是函数指针，必须执行才能获取属性值
+			RowAttributeInfo.AttributeValue = Pair.Value().GetNumericValue(AS);
+			OnMenuAttributeChanged.Broadcast(RowAttributeInfo);
+		}
 	}
 }
 
