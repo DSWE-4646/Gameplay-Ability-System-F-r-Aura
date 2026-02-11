@@ -71,9 +71,8 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 public:
 	/* 生成基础属性的属性访问器函数 */
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health)
-	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana)
-	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana)
+	
 
 	/* 生成加点属性的属性访问器函数 */
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength)
@@ -81,15 +80,29 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience)
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor)
 
-	/*
+	/* 生成附属属性的属性访问器函数 */
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Armor)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ArmorPenetration)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, BlockChance)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitChance)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitDamage)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitResistance)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, HealthRegeneration)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ManaRegeneration)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth)
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana)
+
+	
 	//重命名函数指针
 	typedef FGameplayAttribute (*FAttributeFuncPtr)();
 	TMap<FGameplayTag, FAttributeFuncPtr> TagsToAttributes;
-	*/
+	
 
+	/*
 	template<typename T>
 	using TStaticFuncPtr = TBaseStaticDelegateInstance<T,FDefaultDelegateUserPolicy>::FFuncPtr;
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+	*/
 
 protected:
 

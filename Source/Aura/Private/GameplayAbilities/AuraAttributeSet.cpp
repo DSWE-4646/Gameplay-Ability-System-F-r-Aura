@@ -21,11 +21,23 @@ UAuraAttributeSet::UAuraAttributeSet()
 	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Strength, StrengthDelegate);
 	*/
 
-	/* 此处添加要初始化的属性，此处绑定的Tag与相应的获取属性函数指针用于指定将被初始化的属性*/
+	/* 此处添加要初始化与修改的主属性，此处绑定的Tag与相应的获取属性函数指针用于指定将被初始化的属性*/
 	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Strength, &UAuraAttributeSet::GetStrengthAttribute);
 	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Intelligence, &UAuraAttributeSet::GetIntelligenceAttribute);
 	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Resilience, &UAuraAttributeSet::GetResilienceAttribute);
 	TagsToAttributes.Add(AuraGameplayTags.Attributes_Primary_Vigor, &UAuraAttributeSet::GetVigorAttribute);
+
+	/*  初始化与要修改的副属性 */
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_Armor, &UAuraAttributeSet::GetArmorAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_ArmorPenetration, &UAuraAttributeSet::GetArmorPenetrationAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_BlockChance, &UAuraAttributeSet::GetBlockChanceAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitChance, &UAuraAttributeSet::GetCriticalHitChanceAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitDamage, &UAuraAttributeSet::GetCriticalHitDamageAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitResistance, &UAuraAttributeSet::GetCriticalHitResistanceAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_HealthRegeneration, &UAuraAttributeSet::GetHealthRegenerationAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_ManaRegeneration, &UAuraAttributeSet::GetManaRegenerationAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_MaxHealth, &UAuraAttributeSet::GetMaxHealthAttribute);
+	TagsToAttributes.Add(AuraGameplayTags.Attributes_Secondary_MaxMana, &UAuraAttributeSet::GetMaxManaAttribute);
 }
 
 /* 基础属性的OnRep函数，用于在属性值改变时更新AS值 */
