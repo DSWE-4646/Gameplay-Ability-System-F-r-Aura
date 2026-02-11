@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
+class UAuraGameplayAbility;
 /**
  * 
  */
@@ -18,6 +19,9 @@ class AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	void AbilityActorInfoSet();
 	FEffectAssetTags EffectAssetTags;
+
+	/*  遍历数组并挨个添加GA */
+	void AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& GameplayAbilities);
 	
 private:
 	void EffectApplied(UAbilitySystemComponent*, const FGameplayEffectSpec&, FActiveGameplayEffectHandle);

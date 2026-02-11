@@ -43,6 +43,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	InitAbilityActorInfoInCharac();
+
+	/*  调用父类逻辑向ASC内函数传递GA列表并添加 */
+	AddCharacterAbilities();
 }
 
 void AAuraCharacter::OnRep_PlayerState()

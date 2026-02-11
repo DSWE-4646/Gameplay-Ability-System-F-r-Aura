@@ -2,7 +2,7 @@
 
 
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
-
+#include "GameplayAbilities/GameplayAbility/AuraGameplayAbility.h"
 #include "AuraGameplayTags.h"
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
@@ -22,9 +22,20 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 	*/
 }
 
+void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& GameplayAbilities)
+{
+	for (const TSubclassOf<UAuraGameplayAbility>& Ability : GameplayAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec(Ability, 1); //需要修改，不能const
+		//GiveAbility(AbilitySpec);
+		GiveAbilityAndActivateOnce(AbilitySpec);
+
+	}
+}
+
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC,
-	const FGameplayEffectSpec& EffectSpec,
-	FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
+                                                const FGameplayEffectSpec& EffectSpec,
+                                                FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::MakeRandomColor(), TEXT("EffectApplied"));
 	FGameplayTagContainer TagsContainer;

@@ -4,6 +4,8 @@
 #include "Character/AuraBaseCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "GameplayAbilities/AuraAbilitySystemComponent.h"
+#include "GameplayAbilities/GameplayAbility/AuraGameplayAbility.h"
 
 // Sets default values
 AAuraBaseCharacter::AAuraBaseCharacter()
@@ -75,6 +77,16 @@ void AAuraBaseCharacter::ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GECla
 	}
 	UE_LOG(LogTemp, Warning, TEXT("The %s GE will be applied to self"), *GEClass->GetName());
 	ASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), ASC);
+}
+
+void AAuraBaseCharacter::AddCharacterAbilities() const
+{
+	if (!HasAuthority())
+		return;
+
+	UAuraAbilitySystemComponent* AuraASC = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemInCharac);
+	
+	AuraASC->AddCharacterAbilities(StartupAbilities);
 }
 
 

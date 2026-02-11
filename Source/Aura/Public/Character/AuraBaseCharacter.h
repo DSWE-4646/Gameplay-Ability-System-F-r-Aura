@@ -8,6 +8,7 @@
 #include "Interface/CombatInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
+class UAuraGameplayAbility;
 class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
@@ -55,4 +56,13 @@ protected:
 
 	/* 调用传入的GE初始化角色的主要AS，并启用无限的附属GE以在其他AS更新时修改计算值 */
 	void ApplyGEToSelfForInit(TSubclassOf<UGameplayEffect> GEClass, float Level = 1.f) const;
+
+	/*  在权威时调用，用于添加角色Ability */
+	UFUNCTION()
+	void AddCharacterAbilities() const;
+	
+private:
+	UPROPERTY(EditDefaultsOnly, Category="Attributes")
+	TArray<TSubclassOf<UAuraGameplayAbility>> StartupAbilities;
+
 };
