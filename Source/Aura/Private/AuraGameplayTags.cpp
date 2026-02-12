@@ -79,4 +79,37 @@ void FAuraGameplayTags::InitializeGameplayTags()
             FString("Maximum mana capacity")
         );
 
+
+    // ==============================================
+    // Input Tag 注册
+    // ==============================================
+    GameplayTags.InputTag_LMB = TagManager.AddNativeGameplayTag(
+            FName("Input.LMB"),
+            FString("Left mouse button")
+        );
+
+    GameplayTags.InputTag_RMB = TagManager.AddNativeGameplayTag(
+            FName("Input.RMB"),
+            FString("Right mouse button")
+        );
+
+    GameplayTags.InputTag_1 = TagManager.AddNativeGameplayTag(
+            FName("Input.1"),
+            FString("Key 1")
+        );
+
+    GameplayTags.InputTag_2 = TagManager.AddNativeGameplayTag(
+            FName("Input.2"),
+            FString("Key 2")
+        );
+
+    GameplayTags.InputTag_3 = TagManager.AddNativeGameplayTag(
+            FName("Input.3"),
+            FString("Key 3")
+        );
+
+    GameplayTags.InputTag_4 = TagManager.AddNativeGameplayTag(
+            FName("Input.4"),
+            FString("Key 4")
+        );
 }
