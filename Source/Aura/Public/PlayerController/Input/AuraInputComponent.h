@@ -43,22 +43,24 @@ void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* InputConfig
 	for (const auto& Action : InputConfig->InputActions)
 	{
 		  if (Action.InputAction && Action.ActionTag.IsValid())
-        {
-            // Pressed（Started）
-            if (PressFunc)
-            {
-                BindAction(Action.InputAction, ETriggerEvent::Started, Object, PressFunc, Action.ActionTag);
-            }
-            // Released（Completed）
-            if (ReleaseFunc)
-            {
-                BindAction(Action.InputAction, ETriggerEvent::Completed, Object, ReleaseFunc, Action.ActionTag);
-            }
-            // Held（Triggered）
-            if (HoldFunc)
-            {
-                BindAction(Action.InputAction, ETriggerEvent::Triggered, Object, HoldFunc, Action.ActionTag);
-            }
+		  {
+			  // Pressed（Started）
+		  	if (PressFunc)
+		  	{
+		  		//Action.ActionTag是回调函数的参数
+		  		BindAction(Action.InputAction, ETriggerEvent::Started, Object, PressFunc, Action.ActionTag);
+		  	}
+		  	// Released（Completed）
+		  	if (ReleaseFunc)
+		  	{
+		  		BindAction(Action.InputAction, ETriggerEvent::Completed, Object, ReleaseFunc, Action.ActionTag);
+		  	}
+		  	// Held（Triggered）
+		  	if (HoldFunc)
+		  	{
+		  		BindAction(Action.InputAction, ETriggerEvent::Triggered, Object, HoldFunc, Action.ActionTag);
+		  	}
+		  }
 
 	}
-};
+}

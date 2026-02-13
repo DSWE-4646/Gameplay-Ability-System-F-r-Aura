@@ -34,8 +34,16 @@ void AAuraPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* AuraInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
+	/*  使用自定义输入组件，调用其中的模板函数传入当前的3个函数 */
+	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
 	AuraInputComponent->BindAction(AuraMoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::AuraMove);
+
+	AuraInputComponent->BindAbilityActions(InputConfig,
+		this,
+		&ThisClass::AbilityInputTagpressed,
+		&ThisClass::AbilityInputTagReleased,
+		&ThisClass::AbilityInputTagHold
+		);
 }
 
 void AAuraPlayerController::AuraMove(const FInputActionValue& AuraInputActionValue)
@@ -99,4 +107,22 @@ void AAuraPlayerController::CursorTrace()
 		}
 	}
 		
+}
+
+void AAuraPlayerController::AbilityInputTagpressed( FGameplayTag GameplayTag)
+{
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, GameplayTag.ToString());
+}
+
+void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag GameplayTag)
+{
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, GameplayTag.ToString());
+}
+
+void AAuraPlayerController::AbilityInputTagHold(FGameplayTag GameplayTag)
+{
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, GameplayTag.ToString());
 }
