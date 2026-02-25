@@ -20,6 +20,9 @@ public:
 	void AbilityActorInfoSet();
 	FEffectAssetTags EffectAssetTags;
 
+	void AbilityInputTagHeld(const FGameplayTag& InputTag);
+	void AbilityInputTagReleased(const FGameplayTag& InputTag);
+
 	/*  遍历数组并挨个添加GA */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& GameplayAbilities);
 	

@@ -10,6 +10,7 @@
 #include "AuraPlayerController.generated.h"
 
 
+class UAuraAbilitySystemComponent;
 class UAuraInputConfig;
 struct FInputActionValue;
 class UInputAction;
@@ -23,6 +24,8 @@ class AURA_API AAuraPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AAuraPlayerController();
+
+	UAuraAbilitySystemComponent* GetAuraASC();
 
 protected:
 	virtual void BeginPlay() override;
@@ -51,4 +54,7 @@ private:
 	void AbilityInputTagpressed(FGameplayTag GameplayTag);
 	void AbilityInputTagReleased(FGameplayTag GameplayTag);
 	void AbilityInputTagHold(FGameplayTag GameplayTag);
+
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent> AuraASC;
 };
