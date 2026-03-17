@@ -58,6 +58,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable = nullptr;
 
+	/* 模板函数，根据Tag返回数据表格中的指定类型*/
 	template<typename T>
 	T* GetDataTableRowbyTag(const UDataTable* DataTable, const FGameplayTag& Tag)
 	{

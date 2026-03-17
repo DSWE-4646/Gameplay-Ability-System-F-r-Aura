@@ -4,14 +4,20 @@
 #include "PlayerController/AuraPlayerController.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraGameplayTags.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "GameplayAbilities/AuraAbilitySystemComponent.h"
 #include "InputAction.h"
+#include "Components/SplineComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
+
+	PCSplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("PCSplineComponent"));
+
+	
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraASC()
@@ -45,6 +51,12 @@ void AAuraPlayerController::BeginPlay()
 
 void AAuraPlayerController::SetupInputComponent()
 {
+	/* 在没有在项目设置或者配置文件中 使用自定义输入组件的情况下 应当这样设置 
+	// 先创建自定义的 InputComponent
+	InputComponent = NewObject<UAuraInputComponent>(this, TEXT("InputComponent"));
+	InputComponent->RegisterComponent();
+	*/
+	
 	Super::SetupInputComponent();
 
 	/*  使用自定义输入组件，调用其中的模板函数传入当前的3个函数 */
@@ -58,6 +70,7 @@ void AAuraPlayerController::SetupInputComponent()
 		&ThisClass::AbilityInputTagHold
 		);
 }
+
 
 void AAuraPlayerController::AuraMove(const FInputActionValue& AuraInputActionValue)
 {
@@ -124,17 +137,55 @@ void AAuraPlayerController::CursorTrace()
 
 void AAuraPlayerController::AbilityInputTagpressed( FGameplayTag GameplayTag)
 {
-	
+	if (GameplayTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	{
+		bIsTargeting = (CurrentActor != nullptr);
+		bIsAutoMove = false;
+		PressTime = 0.f; //重置按键时间
+	}
 }
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag GameplayTag)
 {
 	if (!GetAuraASC()) return;
 	AuraASC->AbilityInputTagReleased(GameplayTag);
+
+	
 }
 
 void AAuraPlayerController::AbilityInputTagHold(FGameplayTag GameplayTag)
 {
-	if (!GetAuraASC()) return;
-	AuraASC->AbilityInputTagHeld(GameplayTag);
+	// 不是左键 → 激活技能并返回
+	if (!GameplayTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	{
+		if (!GetAuraASC()) return;
+		AuraASC->AbilityInputTagHeld(GameplayTag);
+		return; //非LMB按键释放技能后跳出
+	}
+
+	// 是左键且瞄准敌人 → 激活技能并返回
+	if (bIsTargeting)
+	{
+		if (!GetAuraASC()) return;
+		AuraASC->AbilityInputTagHeld(GameplayTag);
+		return; //正在锁定目标，跳出
+	}
+
+	// 以下是 Click to Move 逻辑（只有：左键 + 未瞄准敌人才执行）
+	// 短按阈值检查
+	PressTime += GetWorld()->GetDeltaSeconds();
+	if (PressTime < ValveTime)
+		return;
+	
+	FHitResult CursorHit;
+	if (GetHitResultUnderCursor(ECC_Visibility, false, CursorHit))
+	DestinationLocation = CursorHit.Location;
+
+	
+	if (APawn* ControllerPawn = GetPawn())
+	{
+		const FVector DestinationDirection = (DestinationLocation - ControllerPawn->GetActorLocation()).GetSafeNormal();
+		ControllerPawn->AddMovementInput(DestinationDirection, 1.f);
+	}
+	
 }

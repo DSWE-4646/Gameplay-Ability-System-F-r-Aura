@@ -35,8 +35,11 @@ public:
 };
 
 template <class UserClass, typename PressFuncType, typename ReleaseFuncType, typename HoldFuncType>
-void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* InputConfig, UserClass* Object,
-	PressFuncType PressFunc, ReleaseFuncType ReleaseFunc, HoldFuncType HoldFunc)
+void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* InputConfig,
+	UserClass* Object,
+	PressFuncType PressFunc,
+	ReleaseFuncType ReleaseFunc,
+	HoldFuncType HoldFunc)
 {
 	if (!InputConfig || !Object)
 		return;

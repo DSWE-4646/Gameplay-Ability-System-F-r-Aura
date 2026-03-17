@@ -12,14 +12,14 @@ class UAbilitySystemComponent;
 /**
  * 
  */
-
+/* 用作传递参数的结构体*/
 
 USTRUCT(BlueprintType)
-struct FAuraWidgetControllerParams
+struct FAuraWidgetControllerParams 
 {
 	GENERATED_BODY()
 
-	/*提供默认构造函数与初始化列表2种方法*/
+	/*提供默认构造函数与带参初始化列表2种方法*/
 	FAuraWidgetControllerParams() {}
 	FAuraWidgetControllerParams(UAbilitySystemComponent* ASCParam, APlayerController* PCParam, APlayerState* PSParam, UAttributeSet* ASParam)
 		: ASCInWidCtlFS(ASCParam), PCInWidCtlFS(PCParam), PSInWidCtlFS(PSParam), ASInWidCtlFS(ASParam) {}
@@ -42,7 +42,7 @@ class AURA_API UAuraWidgetController : public UObject
 {
 	GENERATED_BODY()
 public:
-	/*使用传入的参数初始化WidgetController*/
+	/*使用传入的结构体初始化WidgetController*/
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FAuraWidgetControllerParams& Params);
 
